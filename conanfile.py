@@ -4,12 +4,13 @@ from conans import ConanFile, tools, os
 class BoostLevel14GroupConan(ConanFile):
     name = "Boost.Level14Group"
     version = "1.64.0"
-    generators = "txt"
+    generators = "boost"
     settings = "os", "arch", "compiler", "build_type"
     url = "https://github.com/bincrafters/conan-boost-level14group"
     description = "Special package with all members of cyclic dependency group"
     license = "www.boost.org/users/license.html"
-    build_requires = "Boost.Build/1.64.0@bincrafters/testing"
+    lib_short_names = ["bimap", "disjoint_sets", "graph", "graph_parallel", "mpi", "property_map"]
+    build_requires = "Boost.Generator/0.0.1@bincrafters/testing"
     requires = "Boost.Algorithm/1.64.0@bincrafters/testing", \
         "Boost.Any/1.64.0@bincrafters/testing", \
         "Boost.Array/1.64.0@bincrafters/testing", \
@@ -41,6 +42,7 @@ class BoostLevel14GroupConan(ConanFile):
         "Boost.Python/1.64.0@bincrafters/testing", \
         "Boost.Random/1.64.0@bincrafters/testing", \
         "Boost.Range/1.64.0@bincrafters/testing", \
+        "Boost.Regex/1.64.0@bincrafters/testing", \
         "Boost.Serialization/1.64.0@bincrafters/testing", \
         "Boost.Smart_Ptr/1.64.0@bincrafters/testing", \
         "Boost.Spirit/1.64.0@bincrafters/testing", \
@@ -84,42 +86,34 @@ class BoostLevel14GroupConan(ConanFile):
     # any6 assert1 bind3 concept_check5 config0 core2 function5 iterator5 lexical_cast8 mpi14 mpl5 multi_index12
     # optional5 serialization11 smart_ptr4 static_assert1 throw_exception2 type_traits3 utility5
 
+
     def source(self):
-        self.run("git clone --depth=50 --branch=boost-{0} {1}.git"
-                 .format(self.version, "https://github.com/boostorg/bimap"))     
-
-        self.run("git clone --depth=50 --branch=boost-{0} {1}.git"
-                 .format(self.version, "https://github.com/boostorg/disjoint_sets"))
-
-        self.run("git clone --depth=50 --branch=boost-{0} {1}.git"
-                 .format(self.version, "https://github.com/boostorg/graph"))
-
-        self.run("git clone --depth=50 --branch=boost-{0} {1}.git"
-                 .format(self.version, "https://github.com/boostorg/graph_parallel"))
-
-        self.run("git clone --depth=50 --branch=boost-{0} {1}.git"
-                 .format(self.version, "https://github.com/boostorg/mpi"))
-
-        self.run("git clone --depth=50 --branch=boost-{0} {1}.git"
-                 .format(self.version, "https://github.com/boostorg/property_map"))
+        for lib_short_name in self.lib_short_names:
+            self.run("git clone --depth=50 --branch=boost-{0} https://github.com/boostorg/{1}.git"
+                     .format(self.version, lib_short_name))
                
+    def build(self):
+        boost_build = self.deps_cpp_info["Boost.Build"]
+        b2_bin_name = "b2.exe" if self.settings.os == "Windows" else "b2"
+        b2_bin_dir_name = boost_build.bindirs[0]
+        b2_full_path = os.path.join(boost_build.rootpath, b2_bin_dir_name, b2_bin_name)
+
+        toolsets = {
+          'gcc': 'gcc',
+          'Visual Studio': 'msvc',
+          'clang': 'clang',
+          'apple-clang': 'darwin'}
+
+        b2_toolset = toolsets[str(self.settings.compiler)]
+        
+        self.run(b2_full_path + " -j4 -a --hash=yes toolset=" + b2_toolset)
+        
     def package(self):
-
-        bimap_dir = os.path.join(self.build_folder, "bimap", "include")
-        self.copy(pattern="*", dst="include", src=bimap_dir)
-
-        disjoint_sets_dir = os.path.join(self.build_folder, "disjoint_sets", "include")
-        self.copy(pattern="*", dst="include", src=disjoint_sets_dir)
+        for lib_short_name in self.lib_short_names:
+            include_dir = os.path.join(self.build_folder, lib_short_name, "include")
+            self.copy(pattern="*", dst="include", src=include_dir)
+        lib_dir = os.path.join(self.build_folder, "stage/lib")
+        self.copy(pattern="*", dst="lib", src=lib_dir)
         
-        graph_dir = os.path.join(self.build_folder, "graph", "include")
-        self.copy(pattern="*", dst="include", src=graph_dir)
-
-        graph_parallel_dir = os.path.join(self.build_folder, "graph_parallel", "include")
-        self.copy(pattern="*", dst="include", src=graph_parallel_dir)
-
-        mpi_dir = os.path.join(self.build_folder, "mpi", "include")
-        self.copy(pattern="*", dst="include", src=mpi_dir)
-
-        property_map_dir = os.path.join(self.build_folder, "property_map", "include")
-        self.copy(pattern="*", dst="include", src=property_map_dir)
-        
+    def package_info(self):
+        self.cpp_info.libs = ["boost_%s"%(lib_short_name) for lib_short_name in self.lib_short_names ]
