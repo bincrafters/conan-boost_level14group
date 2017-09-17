@@ -13,7 +13,7 @@ class BoostLevel14GroupConan(ConanFile):
     lib_short_names = ["bimap", "disjoint_sets", "graph", "graph_parallel", "mpi", "property_map"]
     options = {"shared": [True, False]}
     default_options = "shared=False"
-    build_requires = "Boost.Generator/0.0.1@bincrafters/testing"
+    build_requires = "Boost.Generator/1.64.0@bincrafters/testing"
     requires = "Boost.Algorithm/1.64.0@bincrafters/testing", \
         "Boost.Any/1.64.0@bincrafters/testing", \
         "Boost.Array/1.64.0@bincrafters/testing", \
