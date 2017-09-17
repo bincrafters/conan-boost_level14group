@@ -1,6 +1,6 @@
 ## This repository holds a conan recipe for a cyclic dependency group featuring multiple libraries.
 
-[Conan.io](https://conan.io) package for [Boost.Level14Group](http://www.boost.org/doc/libs/1_64_0/libs/libraries.htm) 
+[Conan.io](https://conan.io) package for [Boost.Level14Group](http://www.boost.org/doc/libs/1_65_1/libs/libraries.htm) 
 
 The packages generated with this **conanfile** can be found in [Bintray](https://bintray.com/bincrafters/public-conan/Boost.Level14Group%3Abincrafters).
 
@@ -10,14 +10,14 @@ The packages generated with this **conanfile** can be found in [Bintray](https:/
 
 ### Basic setup for using with other Boost packages
 
-    $ conan install Boost.Level14Group/1.64.0@bincrafters/testing
+    $ conan install Boost.Level14Group/1.65.1@bincrafters/testing
 
 ### Project setup
 
 If you handle multiple dependencies in your project is better to add a *conanfile.txt*
 
     [requires]
-    Boost.Level14Group/1.64.0@bincrafters/testing
+    Boost.Level14Group/1.65.1@bincrafters/testing
 
     [generators]
     txt
@@ -42,7 +42,7 @@ This package contains header-only libraries, so nothing needs to be built.
 
 ## Upload
 
-    $ conan upload --all --remote bincrafters Boost.Level14Group/1.64.0@bincrafters/testing
+    $ conan upload --all --remote bincrafters Boost.Level14Group/1.65.1@bincrafters/testing
 
 ### License
 [Boost](LICENSE)
