@@ -13,55 +13,55 @@ class BoostLevel14GroupConan(ConanFile):
     lib_short_names = ["bimap", "disjoint_sets", "graph", "graph_parallel", "mpi", "property_map"]
     options = {"shared": [True, False]}
     default_options = "shared=False"
-    build_requires = "Boost.Generator/1.65.1@bincrafters/testing"
-    requires = "Boost.Algorithm/1.65.1@bincrafters/testing", \
-        "Boost.Any/1.65.1@bincrafters/testing", \
-        "Boost.Array/1.65.1@bincrafters/testing", \
-        "Boost.Assert/1.65.1@bincrafters/testing", \
-        "Boost.Bind/1.65.1@bincrafters/testing", \
-        "Boost.Concept_Check/1.65.1@bincrafters/testing", \
-        "Boost.Config/1.65.1@bincrafters/testing", \
-        "Boost.Conversion/1.65.1@bincrafters/testing", \
-        "Boost.Core/1.65.1@bincrafters/testing", \
-        "Boost.Detail/1.65.1@bincrafters/testing", \
-        "Boost.Dynamic_Bitset/1.65.1@bincrafters/testing", \
-        "Boost.Exception/1.65.1@bincrafters/testing", \
-        "Boost.Filesystem/1.65.1@bincrafters/testing", \
-        "Boost.Foreach/1.65.1@bincrafters/testing", \
-        "Boost.Function/1.65.1@bincrafters/testing", \
-        "Boost.Functional/1.65.1@bincrafters/testing", \
-        "Boost.Integer/1.65.1@bincrafters/testing", \
-        "Boost.Iterator/1.65.1@bincrafters/testing", \
-        "Boost.Lambda/1.65.1@bincrafters/testing", \
-        "Boost.Lexical_Cast/1.65.1@bincrafters/testing", \
-        "Boost.Math/1.65.1@bincrafters/testing", \
-        "Boost.Move/1.65.1@bincrafters/testing", \
-        "Boost.Mpl/1.65.1@bincrafters/testing", \
-        "Boost.Multi_Index/1.65.1@bincrafters/testing", \
-        "Boost.Optional/1.65.1@bincrafters/testing", \
-        "Boost.Parameter/1.65.1@bincrafters/testing", \
-        "Boost.Preprocessor/1.65.1@bincrafters/testing", \
-        "Boost.Property_Tree/1.65.1@bincrafters/testing", \
-        "Boost.Python/1.65.1@bincrafters/testing", \
-        "Boost.Random/1.65.1@bincrafters/testing", \
-        "Boost.Range/1.65.1@bincrafters/testing", \
-        "Boost.Regex/1.65.1@bincrafters/testing", \
-        "Boost.Serialization/1.65.1@bincrafters/testing", \
-        "Boost.Smart_Ptr/1.65.1@bincrafters/testing", \
-        "Boost.Spirit/1.65.1@bincrafters/testing", \
-        "Boost.Static_Assert/1.65.1@bincrafters/testing", \
-        "Boost.System/1.65.1@bincrafters/testing", \
-        "Boost.Test/1.65.1@bincrafters/testing", \
-        "Boost.Throw_Exception/1.65.1@bincrafters/testing", \
-        "Boost.Tti/1.65.1@bincrafters/testing", \
-        "Boost.Tuple/1.65.1@bincrafters/testing", \
-        "Boost.Type_Traits/1.65.1@bincrafters/testing", \
-        "Boost.Type_Traits/1.65.1@bincrafters/testing", \
-        "Boost.Typeof/1.65.1@bincrafters/testing", \
-        "Boost.Unordered/1.65.1@bincrafters/testing", \
-        "Boost.Utility/1.65.1@bincrafters/testing", \
-        "Boost.Variant/1.65.1@bincrafters/testing", \
-        "Boost.Xpressive/1.65.1@bincrafters/testing"
+    build_requires = "Boost.Generator/1.65.1@bincrafters/stable"
+    requires = "Boost.Algorithm/1.65.1@bincrafters/stable", \
+        "Boost.Any/1.65.1@bincrafters/stable", \
+        "Boost.Array/1.65.1@bincrafters/stable", \
+        "Boost.Assert/1.65.1@bincrafters/stable", \
+        "Boost.Bind/1.65.1@bincrafters/stable", \
+        "Boost.Concept_Check/1.65.1@bincrafters/stable", \
+        "Boost.Config/1.65.1@bincrafters/stable", \
+        "Boost.Conversion/1.65.1@bincrafters/stable", \
+        "Boost.Core/1.65.1@bincrafters/stable", \
+        "Boost.Detail/1.65.1@bincrafters/stable", \
+        "Boost.Dynamic_Bitset/1.65.1@bincrafters/stable", \
+        "Boost.Exception/1.65.1@bincrafters/stable", \
+        "Boost.Filesystem/1.65.1@bincrafters/stable", \
+        "Boost.Foreach/1.65.1@bincrafters/stable", \
+        "Boost.Function/1.65.1@bincrafters/stable", \
+        "Boost.Functional/1.65.1@bincrafters/stable", \
+        "Boost.Integer/1.65.1@bincrafters/stable", \
+        "Boost.Iterator/1.65.1@bincrafters/stable", \
+        "Boost.Lambda/1.65.1@bincrafters/stable", \
+        "Boost.Lexical_Cast/1.65.1@bincrafters/stable", \
+        "Boost.Math/1.65.1@bincrafters/stable", \
+        "Boost.Move/1.65.1@bincrafters/stable", \
+        "Boost.Mpl/1.65.1@bincrafters/stable", \
+        "Boost.Multi_Index/1.65.1@bincrafters/stable", \
+        "Boost.Optional/1.65.1@bincrafters/stable", \
+        "Boost.Parameter/1.65.1@bincrafters/stable", \
+        "Boost.Preprocessor/1.65.1@bincrafters/stable", \
+        "Boost.Property_Tree/1.65.1@bincrafters/stable", \
+        "Boost.Python/1.65.1@bincrafters/stable", \
+        "Boost.Random/1.65.1@bincrafters/stable", \
+        "Boost.Range/1.65.1@bincrafters/stable", \
+        "Boost.Regex/1.65.1@bincrafters/stable", \
+        "Boost.Serialization/1.65.1@bincrafters/stable", \
+        "Boost.Smart_Ptr/1.65.1@bincrafters/stable", \
+        "Boost.Spirit/1.65.1@bincrafters/stable", \
+        "Boost.Static_Assert/1.65.1@bincrafters/stable", \
+        "Boost.System/1.65.1@bincrafters/stable", \
+        "Boost.Test/1.65.1@bincrafters/stable", \
+        "Boost.Throw_Exception/1.65.1@bincrafters/stable", \
+        "Boost.Tti/1.65.1@bincrafters/stable", \
+        "Boost.Tuple/1.65.1@bincrafters/stable", \
+        "Boost.Type_Traits/1.65.1@bincrafters/stable", \
+        "Boost.Type_Traits/1.65.1@bincrafters/stable", \
+        "Boost.Typeof/1.65.1@bincrafters/stable", \
+        "Boost.Unordered/1.65.1@bincrafters/stable", \
+        "Boost.Utility/1.65.1@bincrafters/stable", \
+        "Boost.Variant/1.65.1@bincrafters/stable", \
+        "Boost.Xpressive/1.65.1@bincrafters/stable"
 
     # Bimap Dependencies
     # concept_check5 config0 core2 functional5 iterator5 lambda6 mpl5 multi_index12 preprocessor0
