@@ -1,21 +1,19 @@
 from conans import ConanFile, tools
-import os
 
 
 class BoostLevel14GroupConan(ConanFile):
     name = "Boost.Level14Group"
     version = "1.65.1"
-    generators = "boost"
-    settings = "os", "arch", "compiler", "build_type"
-    short_paths = True
     url = "https://github.com/bincrafters/conan-boost-level14group"
     description = "Special package with all members of cyclic dependency group"
     license = "www.boost.org/users/license.html"
-    lib_short_names = ["bimap", "disjoint_sets", "graph", "graph_parallel", "mpi", "property_map"]
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
-    build_requires = "Boost.Generator/1.65.1@bincrafters/testing"
-    requires = "Boost.Algorithm/1.65.1@bincrafters/testing", \
+
+    settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False], "mpicc": "ANY"}
+    default_options = "shared=False", "mpicc=default"
+
+    requires = \
+        "Boost.Algorithm/1.65.1@bincrafters/testing", \
         "Boost.Any/1.65.1@bincrafters/testing", \
         "Boost.Array/1.65.1@bincrafters/testing", \
         "Boost.Assert/1.65.1@bincrafters/testing", \
@@ -64,51 +62,34 @@ class BoostLevel14GroupConan(ConanFile):
         "Boost.Variant/1.65.1@bincrafters/testing", \
         "Boost.Xpressive/1.65.1@bincrafters/testing"
 
-    # Bimap Dependencies
-    # concept_check5 config0 core2 functional5 iterator5 lambda6 mpl5 multi_index12 preprocessor0
-    # property_map14 serialization11 static_assert1 throw_exception2 type_traits3 utility5
+    lib_short_names = [
+        "bimap", "disjoint_sets", "graph", "graph_parallel", "mpi",
+        "property_map"]
+    is_header_only = {
+        "bimap":True,
+        "disjoint_sets":True,
+        "graph":False,
+        "graph_parallel":False,
+        "mpi":False,
+        "property_map":True
+        }
+    is_cycle_group = True
 
-    # Disjoint_Sets Dependencies
-    # graph14
+    # BEGIN
 
-    # Graph Dependencies
-    # algorithm9 any6 array3 assert1 bimap14 bind3 concept_check5 config0 conversion5 core2 detail5 disjoint_sets14
-    # foreach8 function5 functional5 graph_parallel14 integer3 iterator5 lexical_cast8 math8 move3 mpl5 multi_index12
-    # optional5 parameter10 preprocessor0 property_map14 property_tree13 random9 range7 serialization11 smart_ptr4
-    # spirit11 static_assert1 test10 throw_exception2 tti6 tuple4 type_traits3 typeof5 unordered8 utility5 xpressive9
+    short_paths = True
+    build_requires = "Boost.Generator/1.65.1@bincrafters/testing"
+    generators = "boost"
 
-    # Graph_Parallel Dependencies
-    # assert1 concept_check5 config0 core2 detail5 disjoint_sets14 dynamic_bitset12 filesystem8 foreach8 function5
-    # functional5 graph14 iterator5 lexical_cast8 mpi14 mpl5 optional5 property_map14 random9 serialization11 smart_
-    # ptr4 static_assert1 tuple4 type_traits3 variant9
+    # pylint: disable=unused-import
+    @property
+    def env(self):
+        try:
+            with tools.pythonpath(super(self.__class__, self)):
+                import boostgenerator # pylint: disable=F0401
+                boostgenerator.BoostConanFile(self)
+        except:
+            pass
+        return super(self.__class__, self).env
 
-    # Mpi Dependencies
-    # assert1 config0 core2 function5 graph14 integer3 iterator5 mpl5 optional5 property_map14 python9 serialization11
-    # smart_ptr4 static_assert1 throw_exception2 type_traits3
-
-    # Property_Map Dependencies
-    # any6 assert1 bind3 concept_check5 config0 core2 function5 iterator5 lexical_cast8 mpi14 mpl5 multi_index12
-    # optional5 serialization11 smart_ptr4 static_assert1 throw_exception2 type_traits3 utility5
-
-
-    def source(self):
-        boostorg_github = "https://github.com/boostorg"
-        archive_name = "boost-" + self.version  
-        for lib_short_name in self.lib_short_names:
-            tools.get("{0}/{1}/archive/{2}.tar.gz"
-                .format(boostorg_github, lib_short_name, archive_name))
-            os.rename(lib_short_name + "-" + archive_name, lib_short_name)
-
-    def build(self):
-        self.run(self.deps_user_info['Boost.Generator'].b2_command)
-
-    def package(self):
-        self.copy(pattern="*", dst="lib", src="stage/lib")
-        for lib_short_name in self.lib_short_names:
-            include_dir = os.path.join(lib_short_name, "include")
-            self.copy(pattern="*", dst="include", src=include_dir)
-
-    def package_info(self):
-        self.user_info.lib_short_names = ",".join(self.lib_short_names)
-        self.cpp_info.libs = tools.collect_libs(self)
-        self.cpp_info.defines.append("BOOST_ALL_NO_LIB=1")
+    # END
