@@ -4,15 +4,12 @@ from conans import ConanFile, tools
 class BoostLevel14GroupConan(ConanFile):
     name = "Boost.Level14Group"
     version = "1.65.1"
-    url = "https://github.com/bincrafters/conan-boost-level14group"
-    description = "Special package with all members of cyclic dependency group"
-    license = "www.boost.org/users/license.html"
 
-    settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False], "mpicc": "ANY"}
     default_options = "shared=False", "mpicc=default"
 
     requires = \
+        "Boost.Generator/1.65.1@bincrafters/testing", \
         "Boost.Algorithm/1.65.1@bincrafters/testing", \
         "Boost.Any/1.65.1@bincrafters/testing", \
         "Boost.Array/1.65.1@bincrafters/testing", \
@@ -77,16 +74,19 @@ class BoostLevel14GroupConan(ConanFile):
 
     # BEGIN
 
+    url = "https://github.com/bincrafters/conan-boost-level14group"
+    description = "Please visit http://www.boost.org/doc/libs/1_65_1"
+    license = "www.boost.org/users/license.html"
     short_paths = True
     build_requires = "Boost.Generator/1.65.1@bincrafters/testing"
     generators = "boost"
+    settings = "os", "arch", "compiler", "build_type"
 
-    # pylint: disable=unused-import
     @property
     def env(self):
         try:
             with tools.pythonpath(super(self.__class__, self)):
-                import boostgenerator # pylint: disable=F0401
+                import boostgenerator  # pylint: disable=F0401
                 boostgenerator.BoostConanFile(self)
         except:
             pass
