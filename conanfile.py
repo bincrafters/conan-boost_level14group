@@ -8,7 +8,8 @@ class BoostLevel14GroupConan(ConanFile):
     name = "boost_level14group"
     version = "1.66.0"
     url = "https://github.com/bincrafters/conan-boost_level14group"
-
+    author = "Bincrafters <bincrafters@gmail.com>"
+    exports = ["LICENSE.md"]
     lib_short_names = [
         "bimap", "disjoint_sets", "graph", "graph_parallel", "mpi",
         "property_map"]
