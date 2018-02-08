@@ -10,11 +10,11 @@ class BoostLevel14GroupConan(ConanFile):
     url = "https://github.com/bincrafters/conan-boost_level14group"
     author = "Bincrafters <bincrafters@gmail.com>"
     exports = ["LICENSE.md"]
+    is_cycle_group = True
     lib_short_names = [
         "bimap", "disjoint_sets", "graph", "graph_parallel", "mpi",
         "property_map"]
         
-    is_cycle_group = True
     is_header_only = {
         "bimap":True,
         "disjoint_sets":True,
