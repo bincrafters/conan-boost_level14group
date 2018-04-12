@@ -75,17 +75,11 @@ class BoostLevel14GroupConan(ConanFile):
         "boost_xpressive/1.67.0@bincrafters/testing"
     )
 
-    #def build_requirements(self):
-    #    self.build_requires("python_dev_config/0.3@bincrafters/stable")
-
     def package_id_additional(self):
         boost_deps_only = [dep_name for dep_name in self.info.requires.pkg_names if dep_name.startswith("boost_")]
 
         for dep_name in boost_deps_only:
             self.info.requires[dep_name].full_version_mode()
-
-    #def b2_options(self, lib_name=None):
-    #    return " --without-mpi"
 
     # BEGIN
 
