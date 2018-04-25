@@ -24,8 +24,8 @@ class BoostLevel14GroupConan(ConanFile):
         "property_map":True
         }
 
-    options = {"shared": [True, False], "mpicc": "ANY"}
-    default_options = "shared=False", "mpicc=default"
+    options = {"shared": [True, False]}
+    default_options = "shared=False"
 
     requires = (
         "boost_package_tools/1.67.0@bincrafters/testing",
@@ -80,6 +80,10 @@ class BoostLevel14GroupConan(ConanFile):
 
         for dep_name in boost_deps_only:
             self.info.requires[dep_name].full_version_mode()
+
+    def build_requirements(self):
+        if not tools.os_info.is_windows:
+            self.build_requires("openmpi/3.0.0@bincrafters/stable")
 
     # BEGIN
 
