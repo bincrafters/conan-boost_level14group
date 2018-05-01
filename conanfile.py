@@ -12,15 +12,12 @@ class BoostLevel14GroupConan(ConanFile):
     exports = ["LICENSE.md"]
     is_cycle_group = True
     lib_short_names = [
-        "bimap", "disjoint_sets", "graph", "graph_parallel", "mpi",
-        "property_map"]
+        "bimap", "disjoint_sets", "graph", "property_map"]
 
     is_header_only = {
         "bimap":True,
         "disjoint_sets":True,
         "graph":False,
-        "graph_parallel":False,
-        "mpi":False,
         "property_map":True
         }
 
