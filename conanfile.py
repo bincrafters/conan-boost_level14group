@@ -1,122 +1,68 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from conans import ConanFile, tools
+from conans import python_requires, tools
 
 
-class BoostLevel14GroupConan(ConanFile):
+base = python_requires("boost_base/1.67.0@bincrafters/testing")
+
+class BoostLevel14GroupConan(base.BoostBaseConan):
     # This is now Level 18
     name = "boost_level14group"
-    version = "1.67.0"
-    author = "Bincrafters <bincrafters@gmail.com>"
-    exports = ["LICENSE.md"]
-    is_cycle_group = True
-    lib_short_names = [
-        "bimap", "disjoint_sets", "graph", "property_map"]
-
-    is_header_only = {
-        "bimap":True,
-        "disjoint_sets":True,
-        "graph":False,
-        "property_map":True
-        }
-
+    url = "https://github.com/bincrafters/conan-boost_level14group"
+    lib_short_names = [ "bimap", "disjoint_sets", "property_map", "graph"]
+    header_only_libs = ["bimap", "disjoint_sets", "property_map"]
     options = {"shared": [True, False]}
     default_options = "shared=False"
+    b2_requires = [
+        "boost_algorithm",
+        "boost_any",
+        "boost_array",
+        "boost_assert",
+        "boost_bind",
+        "boost_concept_check",
+        "boost_config",
+        "boost_container_hash",
+        "boost_conversion",
+        "boost_core",
+        "boost_detail",
+        "boost_dynamic_bitset",
+        "boost_filesystem",
+        "boost_foreach",
+        "boost_function",
+        "boost_integer",
+        "boost_iterator",
+        "boost_lambda",
+        "boost_lexical_cast",
+        "boost_math",
+        "boost_move",
+        "boost_mpl",
+        "boost_multi_index",
+        "boost_optional",
+        "boost_parameter",
+        "boost_preprocessor",
+        "boost_property_tree",
+        "boost_python",
+        "boost_random",
+        "boost_range",
+        "boost_serialization",
+        "boost_smart_ptr",
+        "boost_spirit",
+        "boost_static_assert",
+        "boost_test",
+        "boost_throw_exception",
+        "boost_tti",
+        "boost_tuple",
+        "boost_type_traits",
+        "boost_typeof",
+        "boost_unordered",
+        "boost_utility",
+        "boost_variant",
+        "boost_xpressive"
+    ]
 
-    requires = (
-        "boost_package_tools/1.67.0@bincrafters/testing",
-        "boost_algorithm/1.67.0@bincrafters/testing",
-        "boost_any/1.67.0@bincrafters/testing",
-        "boost_array/1.67.0@bincrafters/testing",
-        "boost_assert/1.67.0@bincrafters/testing",
-        "boost_bind/1.67.0@bincrafters/testing",
-        "boost_concept_check/1.67.0@bincrafters/testing",
-        "boost_config/1.67.0@bincrafters/testing",
-        "boost_container_hash/1.67.0@bincrafters/testing",
-        "boost_conversion/1.67.0@bincrafters/testing",
-        "boost_core/1.67.0@bincrafters/testing",
-        "boost_detail/1.67.0@bincrafters/testing",
-        "boost_dynamic_bitset/1.67.0@bincrafters/testing",
-        "boost_filesystem/1.67.0@bincrafters/testing",
-        "boost_foreach/1.67.0@bincrafters/testing",
-        "boost_function/1.67.0@bincrafters/testing",
-        "boost_integer/1.67.0@bincrafters/testing",
-        "boost_iterator/1.67.0@bincrafters/testing",
-        "boost_lambda/1.67.0@bincrafters/testing",
-        "boost_lexical_cast/1.67.0@bincrafters/testing",
-        "boost_math/1.67.0@bincrafters/testing",
-        "boost_move/1.67.0@bincrafters/testing",
-        "boost_mpl/1.67.0@bincrafters/testing",
-        "boost_multi_index/1.67.0@bincrafters/testing",
-        "boost_optional/1.67.0@bincrafters/testing",
-        "boost_parameter/1.67.0@bincrafters/testing",
-        "boost_preprocessor/1.67.0@bincrafters/testing",
-        "boost_property_tree/1.67.0@bincrafters/testing",
-        "boost_python/1.67.0@bincrafters/testing",
-        "boost_random/1.67.0@bincrafters/testing",
-        "boost_range/1.67.0@bincrafters/testing",
-        "boost_serialization/1.67.0@bincrafters/testing",
-        "boost_smart_ptr/1.67.0@bincrafters/testing",
-        "boost_spirit/1.67.0@bincrafters/testing",
-        "boost_static_assert/1.67.0@bincrafters/testing",
-        "boost_test/1.67.0@bincrafters/testing",
-        "boost_throw_exception/1.67.0@bincrafters/testing",
-        "boost_tti/1.67.0@bincrafters/testing",
-        "boost_tuple/1.67.0@bincrafters/testing",
-        "boost_type_traits/1.67.0@bincrafters/testing",
-        "boost_typeof/1.67.0@bincrafters/testing",
-        "boost_unordered/1.67.0@bincrafters/testing",
-        "boost_utility/1.67.0@bincrafters/testing",
-        "boost_variant/1.67.0@bincrafters/testing",
-        "boost_xpressive/1.67.0@bincrafters/testing"
-    )
-
-    def package_id_additional(self):
-        boost_deps_only = [dep_name for dep_name in self.info.requires.pkg_names if dep_name.startswith("boost_")]
-
-        for dep_name in boost_deps_only:
-            self.info.requires[dep_name].full_version_mode()
 
     def build_requirements(self):
         if not tools.os_info.is_windows:
             self.build_requires("openmpi/3.0.0@bincrafters/stable")
 
-    # BEGIN
-
-    url = "https://github.com/bincrafters/conan-boost_level14group"
-    description = "Please visit http://www.boost.org/doc/libs/1_67_0"
-    license = "BSL-1.0"
-    short_paths = True
-    generators = "boost"
-    settings = "os", "arch", "compiler", "build_type"
-    build_requires = "boost_generator/1.67.0@bincrafters/testing"
-
-    def package_id(self):
-        getattr(self, "package_id_additional", lambda:None)()
-
-    def source(self):
-        with tools.pythonpath(self):
-            import boost_package_tools  # pylint: disable=F0401
-            boost_package_tools.source(self)
-        getattr(self, "source_additional", lambda:None)()
-
-    def build(self):
-        with tools.pythonpath(self):
-            import boost_package_tools  # pylint: disable=F0401
-            boost_package_tools.build(self)
-        getattr(self, "build_additional", lambda:None)()
-
-    def package(self):
-        with tools.pythonpath(self):
-            import boost_package_tools  # pylint: disable=F0401
-            boost_package_tools.package(self)
-        getattr(self, "package_additional", lambda:None)()
-
-    def package_info(self):
-        with tools.pythonpath(self):
-            import boost_package_tools  # pylint: disable=F0401
-            boost_package_tools.package_info(self)
-        getattr(self, "package_info_additional", lambda:None)()
-
-    # END
