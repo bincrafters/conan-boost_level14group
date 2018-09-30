@@ -62,7 +62,7 @@ class BoostLevel14GroupConan(base.BoostBaseConan):
     ]
 
 
-    def build_requirements(self):
+    def build_requirements_additional(self):
         if not tools.os_info.is_windows:
             self.build_requires("openmpi/3.0.0@bincrafters/stable")
 
