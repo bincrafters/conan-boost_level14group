@@ -66,3 +66,5 @@ class BoostLevel14GroupConan(base.BoostBaseConan):
         if not tools.os_info.is_windows:
             self.build_requires("openmpi/3.0.0@bincrafters/stable")
 
+    def package_info_additional(self):
+        self.info.options["boost_python"].python_version = "any"
