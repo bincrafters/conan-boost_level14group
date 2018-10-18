@@ -12,8 +12,15 @@ class BoostLevel14GroupConan(base.BoostBaseConan):
     url = "https://github.com/bincrafters/conan-boost_level14group"
     lib_short_names = [ "bimap", "disjoint_sets", "property_map", "graph"]
     header_only_libs = ["bimap", "disjoint_sets", "property_map"]
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
+    options = {
+        "shared": [True, False],
+        "with_boost_python" : [True,False],
+    }
+    default_options = (
+        "shared=False",
+        "with_boost_python=False",
+    )      
+
     b2_requires = [
         "boost_algorithm",
         "boost_any",
@@ -42,7 +49,6 @@ class BoostLevel14GroupConan(base.BoostBaseConan):
         "boost_parameter",
         "boost_preprocessor",
         "boost_property_tree",
-        "boost_python",
         "boost_random",
         "boost_range",
         "boost_serialization",
@@ -61,10 +67,13 @@ class BoostLevel14GroupConan(base.BoostBaseConan):
         "boost_xpressive"
     ]
 
-
     def build_requirements_additional(self):
         if not tools.os_info.is_windows:
             self.build_requires("openmpi/3.0.0@bincrafters/stable")
+
+    def requirements_additional(self):
+        if self.options.with_boost_python:
+            self.requires("boost_python/1.67.0@bincrafters/stable")
 
     def package_info_additional(self):
         self.info.options["boost_python"].python_version = "any"
