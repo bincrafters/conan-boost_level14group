@@ -4,7 +4,7 @@
 from conans import python_requires, tools
 
 
-base = python_requires("boost_base/1.67.0@bincrafters/stable")
+base = python_requires("boost_base/1.67.0@bincrafters/testing")
 
 class BoostLevel14GroupConan(base.BoostBaseConan):
     # This is now Level 18
