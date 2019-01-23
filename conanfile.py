@@ -9,6 +9,7 @@ base = python_requires("boost_base/1.67.0@bincrafters/testing")
 class BoostLevel14GroupConan(base.BoostBaseConan):
     # This is now Level 18
     name = "boost_level14group"
+    version = "1.67.0"
     url = "https://github.com/bincrafters/conan-boost_level14group"
     lib_short_names = [ "bimap", "disjoint_sets", "property_map", "graph"]
     header_only_libs = ["bimap", "disjoint_sets", "property_map"]
