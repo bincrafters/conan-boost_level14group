@@ -11,7 +11,7 @@ class BoostLevel14GroupConan(base.BoostBaseConan):
     name = "boost_level14group"
     version = "1.67.0"
     url = "https://github.com/bincrafters/conan-boost_level14group"
-    lib_short_names = [ "bimap", "disjoint_sets", "property_map", "graph"]
+    lib_short_names = [ "bimap", "disjoint_sets", "property_map", "graph", "mpi"]
     header_only_libs = ["bimap", "disjoint_sets", "property_map"]
     options = {
         "shared": [True, False],
